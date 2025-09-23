@@ -10,9 +10,9 @@
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>spring_mvc_get</artifactId>
-	<version>3.5.5</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>spring_mvc_get</name>
-	<description>shop</description>
+	<description>spring_mvc_get</description>
 	<url/>
 	<licenses>
 		<license/>
