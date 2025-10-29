@@ -1,5 +1,8 @@
 package com.example.app.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -31,14 +35,20 @@ public class Teacher {
 	@JoinColumn(name = "teacher_detail_id")
 	private TeacherDetail teacherDetail;
 
+	@OneToMany(mappedBy = "teacher", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH })
+	private List<Course> courses;
+
 	public Teacher() {
 	}
 
-	public Teacher(String firstName, String lastName, String email, TeacherDetail teacherDetail) {
+	public Teacher(String firstName, String lastName, String email, TeacherDetail teacherDetail, List<Course> courses) {
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.teacherDetail = teacherDetail;
+		this.courses = courses;
 	}
 
 	public int getId() {
@@ -81,9 +91,26 @@ public class Teacher {
 		this.teacherDetail = teacherDetail;
 	}
 
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
+
 	@Override
 	public String toString() {
 		return "Teacher [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
+	}
+
+	public void addCourse(Course course) {
+		if (this.courses == null) {
+			this.courses = new ArrayList<Course>();
+		}
+		this.courses.add(course);
+		course.setTeacher(this);
+
 	}
 
 }

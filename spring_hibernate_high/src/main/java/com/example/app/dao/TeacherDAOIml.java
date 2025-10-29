@@ -36,4 +36,12 @@ public class TeacherDAOIml implements TeacherDAO {
 
 	}
 
+	@Transactional
+	@Override
+	public void update(Teacher teacher) {
+		entityManager.merge(teacher);
+		entityManager.flush();
+
+	}
+
 }

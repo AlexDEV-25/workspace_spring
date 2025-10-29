@@ -8,4 +8,6 @@ public interface TeacherDAO {
 	public Teacher findTeacherById(int id);
 
 	public void deleteTeacherById(int id);
+
+	public void update(Teacher teacher);
 }
