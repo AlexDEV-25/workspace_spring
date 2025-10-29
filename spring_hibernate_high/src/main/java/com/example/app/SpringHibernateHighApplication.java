@@ -20,9 +20,31 @@ public class SpringHibernateHighApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(TeacherDAO teacherDAO, TeacherDetailDAO teacherDetailDAO) {
 		return runner -> {
-			createTeacher(teacherDAO, teacherDetailDAO);
+//			createTeacher(teacherDAO, teacherDetailDAO);
+			int i = 1;
+			findTeacherById(teacherDAO, i);
+			int j = 16;
+			findTeacherDetailById(teacherDetailDAO, j);
 
 		};
+	}
+
+	private void findTeacherDetailById(TeacherDetailDAO teacherDetailDAO, int i) {
+		if (teacherDetailDAO.findTeacherDetailById(i) != null) {
+			System.out.println(teacherDetailDAO.findTeacherDetailById(i).toString());
+			System.out.println(teacherDetailDAO.findTeacherDetailById(i).getTeacher());
+		} else {
+			System.out.println("noo");
+		}
+	}
+
+	private void findTeacherById(TeacherDAO teacherDAO, int i) {
+		if (teacherDAO.findTeacherById(i) != null) {
+			System.out.println(teacherDAO.findTeacherById(i).toString());
+			System.out.println(teacherDAO.findTeacherById(i).getTeacherDetail());
+		} else {
+			System.out.println("noo");
+		}
 	}
 
 	private void createTeacher(TeacherDAO teacherDAO, TeacherDetailDAO teacherDetailDAO) {

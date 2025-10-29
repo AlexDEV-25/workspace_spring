@@ -22,4 +22,17 @@ public class TeacherDetailDAOIml implements TeacherDetailDAO {
 		entityManager.persist(teacherDetail);
 	}
 
+	@Override
+	public TeacherDetail findTeacherDetailById(int id) {
+		return entityManager.find(TeacherDetail.class, id);
+	}
+
+	@Override
+	public void deleteTeacherDetailById(int id) {
+		TeacherDetail teacherDetail = entityManager.find(TeacherDetail.class, id);
+		if (teacherDetail != null) {
+			entityManager.remove(teacherDetail);
+		}
+	}
+
 }

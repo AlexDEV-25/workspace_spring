@@ -22,4 +22,18 @@ public class TeacherDAOIml implements TeacherDAO {
 		entityManager.persist(teacher);
 	}
 
+	@Override
+	public Teacher findTeacherById(int id) {
+		return entityManager.find(Teacher.class, id);
+	}
+
+	@Override
+	public void deleteTeacherById(int id) {
+		Teacher teacher = entityManager.find(Teacher.class, id);
+		if (teacher != null) {
+			entityManager.remove(teacher);
+		}
+
+	}
+
 }

@@ -3,12 +3,14 @@ package com.example.app.entity;
 import java.sql.Blob;
 import java.sql.Date;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -50,11 +52,16 @@ public class TeacherDetail {
 	@Column(name = "avatar")
 	private Blob avatar;
 
+	@OneToOne(mappedBy = "teacherDetail", cascade = CascadeType.ALL)
+	private Teacher teacher;
+
 	public TeacherDetail() {
 	}
 
 	public TeacherDetail(String identificationNumber, Date dateOfBirth, boolean gender, String phoneNumber,
-			String address, double salary, String youtubeChannel, String facebook, String hobby, Blob avatar) {
+			String address, double salary, String youtubeChannel, String facebook, String hobby, Blob avatar,
+			Teacher teacher) {
+		super();
 		this.identificationNumber = identificationNumber;
 		this.dateOfBirth = dateOfBirth;
 		this.gender = gender;
@@ -65,6 +72,7 @@ public class TeacherDetail {
 		this.facebook = facebook;
 		this.hobby = hobby;
 		this.avatar = avatar;
+		this.teacher = teacher;
 	}
 
 	public int getId() {
@@ -155,12 +163,20 @@ public class TeacherDetail {
 		this.avatar = avatar;
 	}
 
+	public Teacher getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Teacher teacher) {
+		this.teacher = teacher;
+	}
+
 	@Override
 	public String toString() {
 		return "TeacherDetail [id=" + id + ", identificationNumber=" + identificationNumber + ", dateOfBirth="
 				+ dateOfBirth + ", gender=" + gender + ", phoneNumber=" + phoneNumber + ", address=" + address
 				+ ", salary=" + salary + ", youtubeChannel=" + youtubeChannel + ", facebook=" + facebook + ", hobby="
-				+ hobby + ", avatar=" + avatar + "]";
+				+ hobby + ", avatar=" + avatar + ", teacher=" + teacher + "]";
 	}
 
 }
