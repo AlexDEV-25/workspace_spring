@@ -29,8 +29,17 @@ public class SpringHibernateHighApplication {
 //			int j = 16;
 //			findTeacherDetailById(teacherDetailDAO, j);
 
-			createCourses(teacherDAO, courseDAO);
+//			createCourses(teacherDAO, courseDAO);
+
+			findTeacherWithCourses(teacherDAO, 1);
+//			findTeacherWithCourses(teacherDAO, 3);
 		};
+	}
+
+	private void findTeacherWithCourses(TeacherDAO teacherDAO, int i) {
+		Teacher teacher1 = teacherDAO.findTeacherById(i);
+		System.out.println(teacher1);
+		System.out.println(teacher1.getCourses());
 	}
 
 	private void createCourses(TeacherDAO teacherDAO, CourseDAO courseDAO) {
