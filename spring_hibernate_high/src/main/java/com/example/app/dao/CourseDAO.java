@@ -8,4 +8,8 @@ public interface CourseDAO {
 	public void save(Course course);
 
 	public List<Course> findCourseByTeacherId(int id);
+
+	public Course findCourseById(int id);
+
+	public Course findCourseAndStudentByCourseId(int id);
 }

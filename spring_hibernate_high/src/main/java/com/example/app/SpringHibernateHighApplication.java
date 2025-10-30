@@ -8,9 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.example.app.dao.CourseDAO;
+import com.example.app.dao.StudentDAO;
 import com.example.app.dao.TeacherDAO;
 import com.example.app.dao.TeacherDetailDAO;
 import com.example.app.entity.Course;
+import com.example.app.entity.Student;
 import com.example.app.entity.Teacher;
 import com.example.app.entity.TeacherDetail;
 
@@ -23,7 +25,7 @@ public class SpringHibernateHighApplication {
 
 	@Bean
 	public CommandLineRunner commandLineRunner(TeacherDAO teacherDAO, TeacherDetailDAO teacherDetailDAO,
-			CourseDAO courseDAO) {
+			CourseDAO courseDAO, StudentDAO studentDAO) {
 		return runner -> {
 //			createTeacher(teacherDAO, teacherDetailDAO);
 //			int i = 1;
@@ -35,9 +37,33 @@ public class SpringHibernateHighApplication {
 
 //			findTeacherWithCourses(teacherDAO, 1);
 //			findTeacherWithCoursesLazy(teacherDAO, courseDAO, 1);
-			findTeacherWithCoursesLazyJoinFetch(teacherDAO, 1);
+//			findTeacherWithCoursesLazyJoinFetch(teacherDAO, 1);
+
+//			createCourseAndStudent(courseDAO, studentDAO);
+
+			findCourseAndStudent(courseDAO, 1);
 
 		};
+	}
+
+	private void findCourseAndStudent(CourseDAO courseDAO, int id) {
+		Course course = courseDAO.findCourseAndStudentByCourseId(id);
+		System.out.println(course);
+		System.out.println(course.getStudents());
+
+	}
+
+	private void createCourseAndStudent(CourseDAO courseDAO, StudentDAO studentDAO) {
+		Course course1 = new Course("moi", null, null, null, null, null);
+
+		Student student1 = new Student("a", null, null);
+		Student student2 = new Student("b", null, null);
+
+		course1.addStudent(student1);
+		course1.addStudent(student2);
+
+		courseDAO.save(course1);
+
 	}
 
 	private void findTeacherWithCoursesLazyJoinFetch(TeacherDAO teacherDAO, int i) {
@@ -66,8 +92,8 @@ public class SpringHibernateHighApplication {
 		teacherDetail.setAddress("hanoi");
 		Teacher teacher = new Teacher("hoang", "duc", "duc@gmail.com", teacherDetail, null);
 
-		Course c1 = new Course("hibernate", "good", null, null, null);
-		Course c2 = new Course("fullstack", "good", null, null, null);
+		Course c1 = new Course("hibernate", "good", null, null, null, null);
+		Course c2 = new Course("fullstack", "good", null, null, null, null);
 		teacher.addCourse(c1);
 		teacher.addCourse(c2);
 

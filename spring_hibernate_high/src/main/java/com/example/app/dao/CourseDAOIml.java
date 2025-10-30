@@ -33,4 +33,18 @@ public class CourseDAOIml implements CourseDAO {
 		return courses;
 	}
 
+	@Override
+	public Course findCourseById(int id) {
+		return entityManager.find(Course.class, id);
+	}
+
+	@Override
+	public Course findCourseAndStudentByCourseId(int id) {
+		TypedQuery<Course> query = entityManager
+				.createQuery("select c from Course c JOIN FETCH c.students  where c.id=:x", Course.class);
+		query.setParameter("x", id);
+		Course course = query.getSingleResult();
+		return course;
+	}
+
 }

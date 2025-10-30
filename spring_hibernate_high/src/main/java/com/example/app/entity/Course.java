@@ -1,14 +1,19 @@
 package com.example.app.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -36,16 +41,23 @@ public class Course {
 	@JoinColumn(name = "teacher_id")
 	private Teacher teacher;
 
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+			CascadeType.REFRESH })
+	@JoinTable(name = "course_student", joinColumns = @JoinColumn(name = "course_id"), inverseJoinColumns = @JoinColumn(name = "student_id"))
+	private List<Student> students;
+
 	public Course() {
 	}
 
-	public Course(String title, String description, Date startDate, Date endDate, Teacher teacher) {
+	public Course(String title, String description, Date startDate, Date endDate, Teacher teacher,
+			List<Student> students) {
 		super();
 		this.title = title;
 		this.description = description;
 		this.startDate = startDate;
 		EndDate = endDate;
 		this.teacher = teacher;
+		this.students = students;
 	}
 
 	public int getId() {
@@ -96,10 +108,24 @@ public class Course {
 		this.teacher = teacher;
 	}
 
+	public List<Student> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
 	@Override
 	public String toString() {
 		return "Course [id=" + id + ", title=" + title + ", description=" + description + ", startDate=" + startDate
 				+ ", EndDate=" + EndDate + "]";
 	}
 
+	public void addStudent(Student student) {
+		if (this.students == null) {
+			this.students = new ArrayList<Student>();
+		}
+		this.students.add(student);
+	}
 }
