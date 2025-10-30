@@ -1,5 +1,7 @@
 package com.example.app;
 
+import java.util.List;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,9 +33,17 @@ public class SpringHibernateHighApplication {
 
 //			createCourses(teacherDAO, courseDAO);
 
-			findTeacherWithCourses(teacherDAO, 1);
-//			findTeacherWithCourses(teacherDAO, 3);
+//			findTeacherWithCourses(teacherDAO, 1);
+			findTeacherWithCoursesLazy(teacherDAO, courseDAO, 1);
 		};
+	}
+
+	private void findTeacherWithCoursesLazy(TeacherDAO teacherDAO, CourseDAO courseDAO, int i) {
+		Teacher teacher1 = teacherDAO.findTeacherById(i);
+		System.out.println(teacher1);
+
+		List<Course> courses = courseDAO.findCourseByTeacherId(i);
+		System.out.println(courses);
 	}
 
 	private void findTeacherWithCourses(TeacherDAO teacherDAO, int i) {
