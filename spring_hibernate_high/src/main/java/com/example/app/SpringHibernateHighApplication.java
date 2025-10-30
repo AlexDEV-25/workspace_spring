@@ -34,8 +34,16 @@ public class SpringHibernateHighApplication {
 //			createCourses(teacherDAO, courseDAO);
 
 //			findTeacherWithCourses(teacherDAO, 1);
-			findTeacherWithCoursesLazy(teacherDAO, courseDAO, 1);
+//			findTeacherWithCoursesLazy(teacherDAO, courseDAO, 1);
+			findTeacherWithCoursesLazyJoinFetch(teacherDAO, 1);
+
 		};
+	}
+
+	private void findTeacherWithCoursesLazyJoinFetch(TeacherDAO teacherDAO, int i) {
+		Teacher teacher1 = teacherDAO.findTeacherByIdJoinFetch(i);
+		System.out.println(teacher1);
+		System.out.println(teacher1.getCourses());
 	}
 
 	private void findTeacherWithCoursesLazy(TeacherDAO teacherDAO, CourseDAO courseDAO, int i) {

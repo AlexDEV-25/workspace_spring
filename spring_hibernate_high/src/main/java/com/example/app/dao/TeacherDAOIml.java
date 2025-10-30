@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.example.app.entity.Teacher;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -42,6 +43,15 @@ public class TeacherDAOIml implements TeacherDAO {
 		entityManager.merge(teacher);
 		entityManager.flush();
 
+	}
+
+	@Override
+	public Teacher findTeacherByIdJoinFetch(int id) {
+		TypedQuery<Teacher> query = entityManager.createQuery(
+				"select t from Teacher t JOIN FETCH t.courses JOIN FETCH t.teacherDetail where t.id=:x", Teacher.class);
+		query.setParameter("x", id);
+		Teacher teacher = query.getSingleResult();
+		return teacher;
 	}
 
 }

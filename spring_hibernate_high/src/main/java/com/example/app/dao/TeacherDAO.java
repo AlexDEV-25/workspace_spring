@@ -10,4 +10,6 @@ public interface TeacherDAO {
 	public void deleteTeacherById(int id);
 
 	public void update(Teacher teacher);
+
+	public Teacher findTeacherByIdJoinFetch(int id);
 }
